@@ -3,6 +3,8 @@
 **/undo/
 **/spell/*.add.spl
 **/shada/
+**/swap/
+**/view/
 
 # Тимчасові та кеш-файли Neovim
 .repro
