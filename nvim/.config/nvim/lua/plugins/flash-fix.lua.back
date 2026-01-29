@@ -1,0 +1,20 @@
+return {
+  "folke/flash.nvim",
+  opts = {
+    modes = {
+      char = {
+        -- do NOT trigger flash when pressing "s" in normal/visual mode
+        enabled = false,
+      },
+    },
+    -- additional safeguard: blacklist s, gs, gst
+    triggers = {
+      mode = { "n", "x", "o" },
+      keys = {
+        ["s"] = false,
+        ["gs"] = false,
+        ["gst"] = false,
+      },
+    },
+  },
+}

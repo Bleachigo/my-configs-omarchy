@@ -1,0 +1,46 @@
+local M = {}
+
+function M.extract_classes()
+  -- get selected text or whole buffer
+  local mode = vim.fn.mode()
+  local text = ""
+
+  if mode == "v" or mode == "V" then
+    -- VISUAL MODE: get selection
+    local _, ls, cs = unpack(vim.fn.getpos("'<"))
+    local _, le, ce = unpack(vim.fn.getpos("'>"))
+    text = table.concat(vim.fn.getline(ls, le), "\n")
+    text = string.sub(text, cs, #text - (#text - ce))
+  else
+    -- NORMAL MODE: whole file
+    text = table.concat(vim.fn.getline(1, "$"), "\n")
+  end
+
+  -- extract classes
+  local classes = {}
+  for classlist in text:gmatch('class="(.-)"') do
+    for class in classlist:gmatch("%S+") do
+      classes[class] = true
+    end
+  end
+
+  -- nothing found
+  if next(classes) == nil then
+    print("No classes found.")
+    return
+  end
+
+  -- build CSS blocks
+  local result = {}
+  for class in pairs(classes) do
+    table.insert(result, "." .. class .. " {\n    \n}")
+  end
+
+  -- write to clipboard
+  local output = table.concat(result, "\n\n")
+  vim.fn.setreg("+", output)
+
+  print("Copied CSS for " .. tostring(#result) .. " classes to clipboard!")
+end
+
+return M

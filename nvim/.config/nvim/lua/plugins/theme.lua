@@ -1,0 +1,1 @@
+/home/artiplex/.config/omarchy/current/theme/neovim.lua
