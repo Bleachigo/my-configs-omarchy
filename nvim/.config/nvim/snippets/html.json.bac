@@ -1,0 +1,18 @@
+{
+  "html5": {
+    "prefix": "html5",
+    "body": [
+      "<!DOCTYPE html>",
+      "<html lang=\"en\">",
+      "<head>",
+      "<meta charset=\"UTF-8\" />",
+      "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />",
+      "<title>${1:Document}</title>",
+      "<link href=\"css\/styles.css\" rel=\"stylesheet\" />",
+      "</head>",
+      "<body>",
+      "</body>",
+      "</html>"
+    ]
+  }
+}

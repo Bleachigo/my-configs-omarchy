@@ -6,41 +6,53 @@ function M.extract_classes()
   local text = ""
 
   if mode == "v" or mode == "V" then
-    -- VISUAL MODE: get selection
     local _, ls, cs = unpack(vim.fn.getpos("'<"))
     local _, le, ce = unpack(vim.fn.getpos("'>"))
     text = table.concat(vim.fn.getline(ls, le), "\n")
     text = string.sub(text, cs, #text - (#text - ce))
   else
-    -- NORMAL MODE: whole file
     text = table.concat(vim.fn.getline(1, "$"), "\n")
   end
 
-  -- extract classes
-  local classes = {}
+  -- ordered list of classes
+  local ordered = {}
+  local seen = {}
+
+  -- find class="..."
   for classlist in text:gmatch('class="(.-)"') do
     for class in classlist:gmatch("%S+") do
-      classes[class] = true
+      if not seen[class] then
+        table.insert(ordered, class)
+        seen[class] = true
+      end
     end
   end
 
-  -- nothing found
-  if next(classes) == nil then
+  -- also support className="..." (React JSX)
+  for classlist in text:gmatch('className="(.-)"') do
+    for class in classlist:gmatch("%S+") do
+      if not seen[class] then
+        table.insert(ordered, class)
+        seen[class] = true
+      end
+    end
+  end
+
+  if #ordered == 0 then
     print("No classes found.")
     return
   end
 
   -- build CSS blocks
   local result = {}
-  for class in pairs(classes) do
+  for _, class in ipairs(ordered) do
     table.insert(result, "." .. class .. " {\n    \n}")
   end
 
-  -- write to clipboard
   local output = table.concat(result, "\n\n")
   vim.fn.setreg("+", output)
 
-  print("Copied CSS for " .. tostring(#result) .. " classes to clipboard!")
+  print("Copied " .. tostring(#ordered) .. " CSS classes to clipboard (preserved order).")
 end
 
 return M
