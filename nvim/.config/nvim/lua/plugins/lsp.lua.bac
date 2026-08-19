@@ -2,24 +2,20 @@ return {
   {
     "neovim/nvim-lspconfig",
     opts = {
+      -- This section allows you to override settings for specific servers
       servers = {
         cssls = {},
         html = {},
         jsonls = {},
         lua_ls = {},
-        -- Додаємо налаштування саме для emmet_ls
-        emmet_ls = {
-          init_options = {
-            preferences = {
-              ["maxRepeat"] = 50,
-            },
-          },
-        },
       },
+      -- This function runs whenever a server attaches to a buffer
       setup = {
+        -- The '*' means apply this logic to ALL servers
         ["*"] = function(server, opts)
-          -- залишайте ваш існуючий код setup без змін
+          -- Disable formatting for the servers you listed
           local disabled_formatting = { "cssls", "html", "jsonls", "lua_ls" }
+
           for _, name in ipairs(disabled_formatting) do
             if server == name then
               opts.on_attach = function(client, bufnr)

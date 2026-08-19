@@ -18,6 +18,15 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+
+    -- Crucial: Tells blink.cmp and nvim-lspconfig how to talk to each other
+    { import = "lazyvim.plugins.extras.coding.blink" },
+
+    -- Crucial: Activates and configures your installed vtsls engine for JS/TS hints
+    { import = "lazyvim.plugins.extras.lang.typescript" },
+
+    -- Activates your installed tailwindcss-language-server
+    { import = "lazyvim.plugins.extras.lang.tailwind" },
     -- import/override with your plugins
     { import = "plugins" },
   },
