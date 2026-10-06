@@ -15,6 +15,7 @@ return {
         "markdownlint-cli2",
         "marksman",
         "prettier",
+        "prettierd",
         "shfmt",
         "stylua",
       })

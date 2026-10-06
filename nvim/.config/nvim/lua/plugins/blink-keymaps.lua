@@ -6,8 +6,16 @@ return {
         preset = "default",
 
         -- Navigation
-        ["<Tab>"] = { "select_next", "fallback" },
-        ["<S-Tab>"] = { "select_prev", "fallback" },
+        -- Tab: next item when the menu is open, otherwise jump to the next
+        -- snippet placeholder / accept the Copilot suggestion
+        ["<Tab>"] = {
+          "select_next",
+          function(cmp)
+            return LazyVim.cmp.map({ "snippet_forward", "ai_nes", "ai_accept" })(cmp)
+          end,
+          "fallback",
+        },
+        ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<Down>"] = { "select_next", "fallback" },
         ["<Up>"] = { "select_prev", "fallback" },
 
