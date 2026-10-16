@@ -2,6 +2,8 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
+      -- ask the LSP for completions as soon as insert mode starts, so the menu is ready sooner
+      completion = { trigger = { prefetch_on_insert = true } },
       keymap = {
         preset = "default",
 
