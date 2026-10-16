@@ -4,6 +4,13 @@ require("config.remote_clipboard").setup()
 -- Add any additional options here
 vim.opt.relativenumber = false
 
+-- No plugins here are written in Node, Perl, Python or Ruby: skip those providers
+-- (faster startup, no :checkhealth warnings)
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 -- Docker Compose files: lets the compose language server attach (yaml support stays on)
 vim.filetype.add({
   filename = {
