@@ -1,0 +1,13 @@
+{
+  "$schema": "/home/artiplex/.local/share/nvim/mason/packages/oxlint/node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {},
+  "env": {
+    "builtin": true,
+    "browser": true,
+    "node": true
+  }
+}
